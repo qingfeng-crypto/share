@@ -79,16 +79,16 @@
 
 |       角色       | 对应阶段 | 定位 | 核心能力             |
 | :--------------: | :------: | ---- | -------------------- |
-| **建模手** | 建模分析 | 大脑 | 数学建模、算法设计   |
-| **编程手** | 代码实现 | 双手 | 代码实现、数据可视化 |
+| **建模手** | 审核建模手阶段 | 审查角色 | 审查建模交付物（逻辑闭环/编程可行性/公式变量/数据可行性/术语一致性）   |
+| **编程手（你）** | 编程手阶段 | 实现角色 | 建模分析 + 代码实现 + 数据可视化 |
 
-**📘 建模手** - 团队的大脑
+**📘 建模手** - 审查角色
 
-建模手负责将实际问题转化为数学模型，是整个建模过程的起点。主要工作包括：建立前置合同（Model Contract）、深入理解题目背景、选择合适的数学模型和算法、设计求解思路、建立术语规范。详细文档见 `references/roles/建模手/SKILL.md`（渐进式加载）。
+你（用户，即编程手）完成建模分析后，加载建模手技能对其交付物做审查，判断是否足以支撑代码实现。建模手不规定完整建模流程，只做审查：逻辑闭环、编程可行性、公式变量、数据可行性、术语一致性。详细文档见 `references/roles/建模手/SKILL.md`（渐进式加载）。
 
-**💻 编程手** - 团队的双手
+**💻 编程手** - 实现角色（你本人）
 
-编程手负责将建模手的理论设计转化为可运行的代码。主要工作包括：检查编程环境、严格按照建模分析思路编写代码、生成符合 SCI/Nature 标准的可视化图表（Figure Contract + 语义调色板 + SVG/PNG双格式）、创建 HTML 导航面板。详细文档见 `references/roles/编程手/SKILL.md`（渐进式加载）。
+你既负责建模分析（理解题目、选择模型、设计算法、规范术语），也负责将分析转化为可运行代码、生成符合 SCI/Nature 标准的可视化图表（Figure Contract + 语义调色板 + SVG/PNG 双格式）、创建 HTML 导航面板。详细文档见 `references/roles/编程手/SKILL.md`（渐进式加载）。
 
 ## 🚀 快速开始
 
@@ -120,14 +120,14 @@ git clone https://github.com/qingfeng-crypto/mathmodel.git
 
 | Agent | 安装路径 |
 |-------|---------|
-| **Claude Code** | `~/.claude/skills/math-modeling-skill` (macOS/Linux) |
-| | `%USERPROFILE%\.claude\skills\math-modeling-skill` (Windows) |
+| **Claude Code** | `~/.claude/skills/math-modeling` (macOS/Linux) |
+| | `%USERPROFILE%\.claude\skills\math-modeling` (Windows) |
 | **Codex** | 通过 `--skill-dir` 参数指定路径 |
 | **Cursor** | 项目根目录创建 `.cursor/skills/` 放入 |
 | **Trae** | 通过内置插件市场安装或配置 Skills 目录 |
 | **Qoder** | 通过知识库或工作台配置导入 |
 | **Hermes Agent** | 执行 `skills import` 命令导入 |
-| **OpenClaw** | `~/.openclaw/skills/math-modeling-skill` |
+| **OpenClaw** | `~/.openclaw/skills/math-modeling` |
 
 #### 方式二：npx 快速安装（兼容 Agent）
 
@@ -176,8 +176,8 @@ Agent 会自动执行完整的双角色协作流程。
 
 | 阶段 | 角色 | 做什么 | 产出 |
 |:----:|:----:|--------|------|
-| ① | **建模手** | 分析题目、选择模型、设计算法、建立术语规范 | 分析报告 + 术语表 |
-| ② | **编程手** | 编写代码、求解结果、Figure Contract 可视化 | 代码 + SVG/PNG图表 + HTML面板 |
+| ① | **建模手（审查角色）** | 审查你的建模交付物：逻辑闭环、编程可行性、公式变量、数据可行性、术语一致性 | 审查报告（结论 + 问题清单 + 路由确认） |
+| ② | **编程手（你）** | 建模分析 + 编写代码、求解结果、Figure Contract 可视化 | 分析文档 + 代码 + SVG/PNG图表 + HTML面板 |
 
 ---
 
@@ -238,7 +238,7 @@ python hybrid_scholar.py --query "..." --anysearch-api-key "your_key_here"
 ## 📂 目录结构
 
 ```
-math-modeling-skill/
+math-modeling/
 ├── SKILL.md                    # 技能主文档
 ├── README.md                   # 本文件
 ├── assets/                     # 算法资源库（7类60+算法）
