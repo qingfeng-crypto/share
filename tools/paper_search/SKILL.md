@@ -27,7 +27,7 @@ description: "Search academic papers via OpenAlex + AnySearch with cross-validat
 
 在以下情况下使用本技能：
 
-1. **建模分析阶段**：查找模型相关的理论文献
+1. **审核建模手阶段**：查找模型相关的理论文献
 2. **文献引用阶段**：为分析报告添加参考文献引用
 3. **算法验证阶段**：查找算法的原始论文
 4. **用户请求**：用户明确要求搜索论文或文献
