@@ -73,3 +73,22 @@
 - **bode（控制系统）**：需数值用 `[mag,phase,wout]=bode(sys)`；`mag` 是 3-D 数组，SISO 取 `mag(1,1,k)`；`mag` 是幅值非 dB，须 `20*log10(mag)`；**R2024b 起 `gca` 对 bode 图返回 chart 对象而非 axes**，改外观用 `bodeplot` / `getoptions` / `setoptions`；多行标题用含 `newline` 的单个字符串。
 - **fft（频谱）**：必须按"除以 `L` → 取单边 → 正频乘 2（跳过 DC 与奈奎斯特）→ 频率轴 `Fs/L`"四步，禁止裸画 `abs(fft(X))`；相位先阈值清零再 `unwrap(angle(...))`；补零 `n=2^nextpow2(L)` 提分辨率。
 - **三大痛点（已固化）**：① `latex` 解释器拒 Unicode/中文，中文标注用默认 `tex` 或 `'none'`；② 去上/右边框 `box off` + 设 `LineWidth`，`grid off`；③ 字号偏小，出图前统一 `set(groot,'DefaultAxesFontSize',11)`。
+
+### 二维线性规划可行域绘图防错
+
+`linprog` 求解成功不代表后续可行域绘图代码正确。二维可行域通常需要枚举约束边界交点，必须先固定矩阵形状约定：约束矩阵 `A` 为 `m×2`，约束向量 `b` 为 `m×1`，单个交点用于矩阵运算时为 `2×1` 列向量，顶点集合用于存储和绘图时为 `N×2` 行矩阵。
+
+- **`contour` / `clabel` 输出不可混用**：同时接收等高线矩阵和句柄；`X`、`Y`、`Z` 必须具有相同二维尺寸；只有在等高线矩阵有效且为标准两行格式时才调用 `clabel`。
+  ```matlab
+  [X, Y] = meshgrid(x1Grid, x2Grid);
+  assert(isequal(size(X), size(Y), size(Z)), ...
+      'contour 的 X、Y、Z 必须具有相同的二维尺寸');
+  [contourMatrix, contourHandle] = contour(X, Y, Z, levels);
+  if ~isempty(contourMatrix) && size(contourMatrix, 1) == 2
+      clabel(contourMatrix, contourHandle);
+  end
+  ```
+- **边界交点右端保持列向量**：解 `M*x=rhs` 时，`M` 为 `2×2`、`rhs` 必须为 `2×1`；不要在 `[rhs1; rhs2]` 后追加转置符号，否则会变成 `1×2` 并触发左除维度错误。平行或重合边界先检查 `rank(M)` 或数值秩。
+- **顶点集合统一为 `N×2`**：初始化使用 `vertices = zeros(0, 2)`；新增顶点使用 `vertices(end+1,:) = point(:).'`；禁止混合 `1×2` 和 `2×1` 顶点后直接纵向拼接，否则会触发 `vertcat` 维度错误。
+- **矩阵乘法统一使用列向量**：从顶点矩阵取点后写 `v = vertices(k,:).'`，再用 `A*v <= b + tol` 检查可行性；不要根据变量当前形状交替使用 `A*v` 和 `A*v'`。
+- **绘图失败与求解失败分开处理**：若 `exitflag > 0` 而 `plot_feasible_region` 报错，应保留并报告 LP 求解结果，只修复绘图函数；不得把可视化异常误判为模型或 `linprog` 求解失败。
