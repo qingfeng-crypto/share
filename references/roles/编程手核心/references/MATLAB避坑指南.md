@@ -64,7 +64,7 @@
 
 ## 六、图形与专用可视化（含已固化三大痛点）
 
-> 护栏前提：出图默认 **Python（matplotlib）**；MATLAB 仅用于极个别专用图（控制系统频域、Signal Processing、需 `.fig` 等）。以下用于给 MATLAB 专用图兜底。
+> 护栏前提：论文正式图表**优先使用 Python（matplotlib）**；MATLAB 可用于专用图，或已能以不高于 Python 重绘的成本达到同等视觉质量与交付标准的场景（如控制系统频域、Signal Processing、需 `.fig` 等）。以下用于给 MATLAB 直接出图提供兜底规范。
 
 - **导出**：一律 `exportgraphics` 而非 `saveas`；显式 `Resolution`（≥300）或 `ContentType,'vector'`；**不对 JPEG/PNG 传 `ContentType,'vector'`（无效）**；透明背景需 `BackgroundColor,'none'` 且配 `vector`；截整窗（含 App 控件）用 `exportapp`。
 - **savefig vs exportgraphics**：`savefig` 存可重开的 `.fig` 工程文件；`exportgraphics` 出成品图。交付论文图用后者。跨机/含中文 `.fig` 用 `"-v7.3"`；R2024b 起 `.fig` 默认紧凑、不兼容 R2014a 前。
