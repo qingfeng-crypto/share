@@ -230,24 +230,77 @@ pdftk input.pdf rotate 1east output rotated.pdf
 
 ## Common Tasks
 
-### Extract Text from Scanned PDFs
-```python
-# Requires: pip install pytesseract pdf2image
-import pytesseract
-from pdf2image import convert_from_path
+### Extract Text from Scanned PDFs (image-only PDFs with no text layer)
 
-# Convert PDF to images
-images = convert_from_path('scanned.pdf')
+> **Verified stable method (Windows, Python 3.14).** Image-only PDFs (scanned
+> math-contest problem sheets) have NO extractable text layer, so pdfplumber /
+> pdftotext return empty. You MUST render each page to a raster image first,
+> then OCR it. Do NOT use `pdf2image` (needs poppler) and do NOT rely on
+> `pytesseract` auto-discovering tesseract (it fails on Windows 3.14). The
+> approach below renders with `fitz` (PyMuPDF) and drives `tesseract` via the
+> command line — this is the combination that actually works.
 
-# OCR each page
-text = ""
-for i, image in enumerate(images):
-    text += f"Page {i+1}:\n"
-    text += pytesseract.image_to_string(image)
-    text += "\n\n"
+**One-time environment setup:**
+```powershell
+# 1. Install tesseract engine (UB-Mannheim build) — adds tesseract.exe
+winget install UB-Mannheim.TesseractOCR
+#    Default install path: C:\Program Files\Tesseract-OCR\tesseract.exe
+#    (open a NEW shell after install so PATH refreshes; we hardcode the path anyway)
 
-print(text)
+# 2. Install the Chinese language pack (chi_sim) into tessdata.
+#    The bundled installer does NOT include chi_sim. Download the fast build
+#    (~2.4 MB, valid; the ~871 KB GitHub raw file is a TRUNCATED/corrupt copy):
+$url  = "https://raw.githubusercontent.com/tesseract-ocr/tessdata_fast/main/chi_sim.traineddata"
+$dest = "$env:USERPROFILE\Desktop\chi_sim.traineddata"
+Invoke-WebRequest -Uri $url -OutFile $dest
+#    Then copy into the tessdata dir (Program Files needs admin / runas):
+& cmd /c "copy /Y `"$dest`" `"C:\Program Files\Tesseract-OCR\tessdata\chi_sim.traineddata`""
+
+# 3. Python deps
+pip install pymupdf pytesseract pillow pandas openpyxl
 ```
+
+**OCR a scanned PDF (render with fitz, OCR with tesseract CLI):**
+```python
+import subprocess, os, fitz
+
+PDF   = r"path/to/scanned.pdf"
+OUT   = r"path/to/ocr_output.txt"
+TESS  = r"C:\Program Files\Tesseract-OCR\tesseract.exe"   # hardcode, do not rely on PATH
+LANG  = "chi_sim"        # add "+eng" if mixed: "chi_sim+eng"
+DPI   = 200              # 200 is a good balance; bump to 300 for tiny print
+
+doc = fitz.open(PDF)
+pages_text = []
+for i, page in enumerate(doc):
+    pix = page.get_pixmap(dpi=DPI)
+    img = f"{OUT}.page{i+1}.png"
+    pix.save(img)
+    out_base = f"{OUT}.page{i+1}"
+    # Drive tesseract via CLI — most reliable on Windows/3.14
+    r = subprocess.run([TESS, img, out_base, "-l", LANG],
+                       capture_output=True, text=True)
+    if r.returncode != 0:
+        raise RuntimeError(f"tesseract failed on page {i+1}: {r.stderr}")
+    with open(out_base + ".txt", encoding="utf-8") as f:
+        pages_text.append(f"Page {i+1}:\n" + f.read())
+
+with open(OUT, "w", encoding="utf-8") as f:
+    f.write("\n\n".join(pages_text))
+print("OCR done —", len(pages_text), "pages")
+```
+
+**Notes / gotchas (learned the hard way):**
+- `chi_sim.traineddata` must be a real ~2.4 MB fast-build file. The smaller
+  ~871 KB copy from some mirrors is truncated and tesseract will report
+  `Error opening data file ... Failed loading language 'chi_sim'`.
+- Always pass the full `tesseract.exe` path; `pytesseract.pytesseract.tesseract_cmd`
+  auto-detection is unreliable here.
+- For mixed Chinese/English sheets use `LANG = "chi_sim+eng"`.
+- After OCR, expect a few character errors (e.g. 竞赛→况赛, 束→东). These are
+  harmless for understanding the problem statement; do not re-OCR infinitely.
+- Excel attachments (`.xlsx`) are NOT text to OCR — read them directly with
+  `pandas.read_excel`. `pdfplumber`/`fitz` do not extract xlsx content.
 
 ### Add Watermark
 ```python
@@ -303,7 +356,7 @@ with open("encrypted.pdf", "wb") as output:
 | Extract tables | pdfplumber | `page.extract_tables()` |
 | Create PDFs | reportlab | Canvas or Platypus |
 | Command line merge | qpdf | `qpdf --empty --pages ...` |
-| OCR scanned PDFs | pytesseract | Convert to image first |
+| OCR scanned PDFs | fitz + tesseract CLI | Render page→PNG, then `tesseract -l chi_sim` (see above) |
 | Fill PDF forms | pdf-lib or pypdf (see FORMS.md) | See FORMS.md |
 
 ## Next Steps
