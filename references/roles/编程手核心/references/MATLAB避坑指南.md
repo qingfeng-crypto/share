@@ -49,7 +49,7 @@
 
 ## 四、微分方程（ode45 / ode15s / pdepe）
 
-- **ode45 / ode15s**：先判刚性——出现"求解极慢/步数爆炸"立即改用 `ode15s`；`odefun` 必须 `(t,y)` 两输入并返回**列向量**，`y0` 为列向量且长度匹配；解结构体用 `sol.x`(时间) / `sol.y`(解)，任意点取值用 `deval(sol, x)`；`tspan` 多元素不控制步长。
+- **ode45 / ode15s**：先判刚性——出现"求解极慢/步数爆炸"立即改用 `ode15s`；`odefun` 必须 `(t,y)` 两输入并返回**列向量**，`y0` 为列向量且长度匹配；解结构体用 `sol.x`(时间) / `sol.y`(解)，任意点取值用 `deval(sol, x)`；`tspan` 多元素不控制步长。注：旧式 API（如 ode45）返回 sol 结构体，sol.x 为时间，sol.y 为解；新式 ode 对象返回 ODEResults，用 S.Time / S.Solution 访问。根据求解器类型选择对应写法。
 - **pdepe**：先化标准型 `c·∂u/∂t = x^(-m)·∂(x^m·f)/∂x + s`，`pdefun` 返回 `[c,f,s]`；边界写 `p + q·f = 0`（`m>0` 时左边界被忽略，求解器自动对称）；`xmesh` / `tspan` 严格递增且长度 ≥3，精度由 `xmesh` 密度主导；取解 `u = sol(:,:,k)`；仅支持 `RelTol` / `AbsTol` / `NormControl` / `InitialStep` / `MaxStep` 等受支持选项（其余 `odeset` 选项会被忽略）。
 
 ---
