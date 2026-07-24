@@ -92,6 +92,9 @@ description: "Search academic papers via OpenAlex + AnySearch with cross-validat
 
 使用 `hybrid_scholar.py` 同时调用两个引擎：
 
+> **执行前提**：以下命令假设当前工作目录为技能根目录 `C:\Users\qingf\.claude\skills\math-modeling\`。
+> 若在不同目录执行，需调整路径或使用绝对路径。
+
 ```bash
 # 基础混合搜索（建议提供真实邮箱进入 OpenAlex 礼貌池）
 python tools/paper_search/scripts/hybrid_scholar.py --query "grey prediction model" --email "your@email.com"

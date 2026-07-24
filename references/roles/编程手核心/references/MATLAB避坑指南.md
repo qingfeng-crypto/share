@@ -92,3 +92,18 @@
 - **顶点集合统一为 `N×2`**：初始化使用 `vertices = zeros(0, 2)`；新增顶点使用 `vertices(end+1,:) = point(:).'`；禁止混合 `1×2` 和 `2×1` 顶点后直接纵向拼接，否则会触发 `vertcat` 维度错误。
 - **矩阵乘法统一使用列向量**：从顶点矩阵取点后写 `v = vertices(k,:).'`，再用 `A*v <= b + tol` 检查可行性；不要根据变量当前形状交替使用 `A*v` 和 `A*v'`。
 - **绘图失败与求解失败分开处理**：若 `exitflag > 0` 而 `plot_feasible_region` 报错，应保留并报告 LP 求解结果，只修复绘图函数；不得把可视化异常误判为模型或 `linprog` 求解失败。
+
+---
+
+### 数据预处理
+
+- `rmmissing(T)` — 删除缺失值行
+- `fillmissing(T, 'linear')` — 线性插值填补缺失值
+- `fillmissing(T, 'previous')` — 前向填充
+- `fillmissing(T, 'movmean', 5)` — 滑动平均填补
+- `isoutlier(X)` — 异常值检测（默认 IQR 方法）
+- `isoutlier(X, 'mean')` — 基于均值的异常值检测
+- `zscore(X)` — 标准化（均值为 0，标准差为 1）
+- `rescale(X, 0, 1)` — 归一化到 [0, 1]
+- `normalize(X, 'range')` — 同上，更推荐
+- `normalize(X, 'zscore')` — z-score 标准化

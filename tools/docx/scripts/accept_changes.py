@@ -9,12 +9,17 @@ import shutil
 import subprocess
 from pathlib import Path
 
-from office.soffice import get_soffice_env
+import sys, os, tempfile
+_SHARED = os.path.join(os.path.dirname(__file__), "..", "..", "_shared")
+if _SHARED not in sys.path:
+    sys.path.insert(0, os.path.abspath(_SHARED))
+
+from _shared.office.soffice import get_soffice_env
 
 logger = logging.getLogger(__name__)
 
-LIBREOFFICE_PROFILE = "/tmp/libreoffice_docx_profile"
-MACRO_DIR = f"{LIBREOFFICE_PROFILE}/user/basic/Standard"
+LIBREOFFICE_PROFILE = os.path.join(tempfile.gettempdir(), "libreoffice_docx_profile")
+MACRO_DIR = os.path.join(LIBREOFFICE_PROFILE, "user", "basic", "Standard")
 
 ACCEPT_CHANGES_MACRO = """<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
@@ -55,10 +60,11 @@ def accept_changes(
     if not _setup_libreoffice_macro():
         return None, "Error: Failed to setup LibreOffice macro"
 
+    profile_url = LIBREOFFICE_PROFILE.replace("\\", "/")
     cmd = [
         "soffice",
         "--headless",
-        f"-env:UserInstallation=file://{LIBREOFFICE_PROFILE}",
+        f"-env:UserInstallation=file://{profile_url}",
         "--norestore",
         "vnd.sun.star.script:Standard.Module1.AcceptAllTrackedChanges?language=Basic&location=application",
         str(output_path.absolute()),
@@ -95,12 +101,13 @@ def _setup_libreoffice_macro() -> bool:
     if macro_file.exists() and "AcceptAllTrackedChanges" in macro_file.read_text():
         return True
 
+    profile_url = LIBREOFFICE_PROFILE.replace("\\", "/")
     if not macro_dir.exists():
         subprocess.run(
             [
                 "soffice",
                 "--headless",
-                f"-env:UserInstallation=file://{LIBREOFFICE_PROFILE}",
+                f"-env:UserInstallation=file://{profile_url}",
                 "--terminate_after_init",
             ],
             capture_output=True,

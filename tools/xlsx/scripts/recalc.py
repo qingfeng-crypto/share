@@ -10,9 +10,24 @@ import subprocess
 import sys
 from pathlib import Path
 
-from office.soffice import get_soffice_env
+_SHARED = os.path.join(os.path.dirname(__file__), "..", "..", "_shared")
+if _SHARED not in sys.path:
+    sys.path.insert(0, os.path.abspath(_SHARED))
+
+from _shared.office.soffice import get_soffice_env
 
 from openpyxl import load_workbook
+
+
+def run_with_timeout(cmd, timeout_sec=30):
+    if sys.platform == "win32":
+        return subprocess.run(cmd, capture_output=True, text=True, timeout=timeout_sec)
+    else:
+        if platform.system() == "Linux":
+            cmd = ["timeout", str(timeout_sec)] + cmd
+        elif platform.system() == "Darwin":
+            cmd = ["gtimeout", str(timeout_sec)] + cmd
+        return subprocess.run(cmd, capture_output=True, text=True)
 
 MACRO_DIR_MACOS = "~/Library/Application Support/LibreOffice/4/user/basic/Standard"
 MACRO_DIR_LINUX = "~/.config/libreoffice/4/user/basic/Standard"
@@ -84,12 +99,7 @@ def recalc(filename, timeout=30):
         abs_path,
     ]
 
-    if platform.system() == "Linux":
-        cmd = ["timeout", str(timeout)] + cmd
-    elif platform.system() == "Darwin" and has_gtimeout():
-        cmd = ["gtimeout", str(timeout)] + cmd
-
-    result = subprocess.run(cmd, capture_output=True, text=True, env=get_soffice_env())
+    result = run_with_timeout(cmd, timeout)
 
     if result.returncode != 0 and result.returncode != 124:  
         error_msg = result.stderr or "Unknown error during recalculation"
