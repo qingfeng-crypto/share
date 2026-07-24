@@ -1,4 +1,4 @@
----
+﻿---
 name: 建模分析与审查
 description: 数学建模的建模分析与审查阶段。当需要基于题目原文进行建模分析、拆分子问题、产出术语表和模型方案，或审查已有建模成果是否可进入编程实现时加载。
 ---
@@ -105,9 +105,9 @@ description: 数学建模的建模分析与审查阶段。当需要基于题目�
 
 | 文档 | 用途 |
 |------|------|
-| `references/roles/审核建模手/references/前置合同.md` | 建模交付物验收标准（核心结论、证据链、方案评审） |
-| `references/roles/审核建模手/references/工作流程.md` | 审查流程：逻辑闭环 -> 编程可行性 -> 公式变量 -> 数据可行性 -> 术语一致性 |
-| `references/roles/审核建模手/references/建模设计理论.md` | 审查时的判断依据：模型选择、复杂度控制、组合策略、证据层次 |
+| `references/roles/建模分析与审查/references/前置合同.md` | 建模交付物验收标准（核心结论、证据链、方案评审） |
+| `references/roles/建模分析与审查/references/工作流程.md` | 审查流程：逻辑闭环 -> 编程可行性 -> 公式变量 -> 数据可行性 -> 术语一致性 |
+| `references/roles/建模分析与审查/references/建模设计理论.md` | 审查时的判断依据：模型选择、复杂度控制、组合策略、证据层次 |
 
 ---
 
@@ -115,11 +115,11 @@ description: 数学建模的建模分析与审查阶段。当需要基于题目�
 
 | 文件 | 什么时候打开 |
 |------|-------------|
-| `references/roles/审核建模手/references/前置合同.md` | 审查建模交付物是否满足核心结论与证据链要求 |
-| `references/roles/审核建模手/references/工作流程.md` | 执行审查流程时逐项检查 |
-| `references/roles/审核建模手/references/常见模式.md` | 审查模型类型是否恰当（优化/预测/评价/综合） |
-| `references/roles/审核建模手/references/质检清单.md` | 审查完成后的逐项检查表 |
-| `references/roles/审核建模手/references/建模设计理论.md` | 判断模型选择是否合理、复杂度是否可控 |
+| `references/roles/建模分析与审查/references/前置合同.md` | 审查建模交付物是否满足核心结论与证据链要求 |
+| `references/roles/建模分析与审查/references/工作流程.md` | 执行审查流程时逐项检查 |
+| `references/roles/建模分析与审查/references/常见模式.md` | 审查模型类型是否恰当（优化/预测/评价/综合） |
+| `references/roles/建模分析与审查/references/质检清单.md` | 审查完成后的逐项检查表 |
+| `references/roles/建模分析与审查/references/建模设计理论.md` | 判断模型选择是否合理、复杂度是否可控 |
 | `references/roles/编程手核心/references/语言路由指南.md` | 仅供了解编程手如何自行判定语言；本角色不产出路由表 |
 
 ---
@@ -142,7 +142,7 @@ description: 数学建模的建模分析与审查阶段。当需要基于题目�
 
 ## 审查产出格式
 
-审查结论统一遵循 `references/roles/审核建模手/references/工作流程.md` 的约定，输出为**子问题审查记录（Markdown）**。审查记录模板见独立文件 `references/roles/审核建模手/references/子问题审查记录模板.md`，不再使用 Word 报告结构。
+审查结论统一遵循 `references/roles/建模分析与审查/references/工作流程.md` 的约定，输出为**子问题审查记录（Markdown）**。审查记录模板见独立文件 `references/roles/建模分析与审查/references/子问题审查记录模板.md`，不再使用 Word 报告结构。
 
 ---
 
@@ -154,3 +154,4 @@ description: 数学建模的建模分析与审查阶段。当需要基于题目�
 | 分析 Excel 数据 | `tools/xlsx` | 题目附带表格数据时 |
 | 搜索学术文献 | `tools/paper_search/scripts/hybrid_scholar.py` | 验证模型选择的文献支撑 |
 | 生成子问题审查记录（Markdown） | `tools/markdown` 或直接输出 | 审查完成时输出结构化审查记录 |
+

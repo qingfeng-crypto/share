@@ -1,4 +1,4 @@
----
+﻿---
 name: "paper-search"
 description: "Search academic papers via OpenAlex + AnySearch with cross-validation for math modeling references. Invoke when user needs literature search, paper references, or when writing papers requires citations."
 ---
@@ -27,7 +27,7 @@ description: "Search academic papers via OpenAlex + AnySearch with cross-validat
 
 在以下情况下使用本技能：
 
-1. **审核建模手阶段**：查找模型相关的理论文献
+1. **建模分析与审查阶段**：查找模型相关的理论文献
 2. **文献引用阶段**：为分析报告添加参考文献引用
 3. **算法验证阶段**：查找算法的原始论文
 4. **用户请求**：用户明确要求搜索论文或文献
@@ -291,3 +291,4 @@ python hybrid_scholar.py --query "..." --anysearch-api-key "your_key_here"
 - [OpenAlex API 文档](https://docs.openalex.org/)
 - [OpenAlex 礼貌池规则](https://docs.openalex.org/how-to-use-the-api/rate-limits-and-authentication)
 - [AnySearch 项目](https://github.com/anysearch-ai/anysearch-skill)
+
