@@ -70,7 +70,7 @@
 - **savefig vs exportgraphics**：`savefig` 存可重开的 `.fig` 工程文件；`exportgraphics` 出成品图。交付论文图用后者。跨机/含中文 `.fig` 用 `"-v7.3"`；R2024b 起 `.fig` 默认紧凑、不兼容 R2014a 前。
 - **figure 初始化**：`figure('Color','white','NumberTitle','off')` 去灰底与 "Figure N:" 前缀。
 - **colormap**：默认 `parula` / `turbo`，**禁止 `jet`**；单坐标区用 `colormap(ax, map)`；控制颜色范围用 `clim`（**非旧 `caxis`**，R2022a 前才叫 caxis）。
-- **bode（控制系统）**：需数值用 `[mag,phase,wout]=bode(sys)`；`mag` 是 3-D 数组，SISO 取 `mag(1,1,k)`；`mag` 是幅值非 dB，须 `20*log10(mag)`；**R2024b 起 `gca` 对 bode 图返回 chart 对象而非 axes**，改外观用 `bodeplot` / `getoptions` / `setoptions`；多行标题用含 `newline` 的单个字符串。
+- **bode（控制系统）**：需数值用 `[mag,phase,wout]=bode(sys)`；`mag` 是 3-D 数组，SISO 取 `mag(1,1,k)`；`mag` 是幅值非 dB，须 `20*log10(mag)`；**R2024b 起 bode 图内部渲染对象化程度提高**，改外观用 `bodeplot` / `getoptions` / `setoptions`，不要直接操作 axes 属性；多行标题用含 `newline` 的单个字符串。
 - **fft（频谱）**：必须按"除以 `L` → 取单边 → 正频乘 2（跳过 DC 与奈奎斯特）→ 频率轴 `Fs/L`"四步，禁止裸画 `abs(fft(X))`；相位先阈值清零再 `unwrap(angle(...))`；补零 `n=2^nextpow2(L)` 提分辨率。
 - **三大痛点（已固化）**：① `latex` 解释器拒 Unicode/中文，中文标注用默认 `tex` 或 `'none'`；② 去上/右边框 `box off` + 设 `LineWidth`，`grid off`；③ 字号偏小，出图前统一 `set(groot,'DefaultAxesFontSize',11)`。
 
