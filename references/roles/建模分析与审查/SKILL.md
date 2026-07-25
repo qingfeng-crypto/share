@@ -153,6 +153,6 @@ description: 数学建模的建模审查与翻译阶段。当真人建模手队�
 | 读取 PDF 题目 | `tools/pdf` | 题目为 PDF 格式时 |
 | 分析 Excel 数据 | `tools/xlsx` | 题目附带表格数据时 |
 | 搜索学术文献 | `tools/paper_search/scripts/hybrid_scholar.py` | 验证模型选择的文献支撑 |
-| 生成子问题审查记录（Markdown） | `tools/markdown` 或直接输出 | 审查完成时输出结构化审查记录 |
+| 生成子问题审查记录（Markdown） | 直接输出（对话中生成 .md 审查记录） | 审查完成时输出结构化审查记录 |
 
 

@@ -20,6 +20,16 @@
 | Excel 处理 | `tools/xlsx/SKILL.md` | 读取/编辑 .xlsx |
 | 论文搜索 | `tools/paper_search/SKILL.md` | 学术文献检索 |
 
+## 算法资源库
+
+7 大类 60+ 算法说明（含 Python/MATLAB 双实现）：`assets/`
+快速索引：`assets/README.md`
+可视化示例图：`imgs/`（2025 年国赛 A/B 题示例）
+
+## 历史文档
+
+`docs/` 目录包含历史设计文档和修复计划，不影响当前系统行为，仅供了解演进。
+
 ## 旧目录说明
 
 `建模手/`、`编程手/` 目录在主 SKILL.md v20260720 版本之前的遗留内容，已腾空。
