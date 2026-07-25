@@ -43,6 +43,12 @@ description: 本技能应在用户要求"数模"、"数学建模"、"建模比�
 3. 后续提醒用户补充文件（readme.md、AI工具使用详情.pdf、论文.PDF、支撑材料.zip）也是 AI 的全局动作，不归属于交付论文手。
 4. 子技能文件中不得声称"搭建框架+提醒"是某个角色的核心职责；这是数模技能层面的全局要求。
 
+## 路径基准公约
+
+本技能所有文件引用均以**技能根目录**（`math-modeling/`）为基准。例如：
+- `references/roles/编程手核心/SKILL.md` 指 `math-modeling/references/roles/编程手核心/SKILL.md`
+- `assets/01-优化算法说明.md` 指 `math-modeling/assets/01-优化算法说明.md`
+
 ## 启动引导（加载即问）
 
 加载本技能后，先确认用户选（1）（2）（3）（4）中哪一个，再进入对应分支：

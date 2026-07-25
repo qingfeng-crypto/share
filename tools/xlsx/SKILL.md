@@ -99,6 +99,8 @@ df.to_excel('output.xlsx', index=False)
 
 **Always use Excel formulas instead of calculating values in Python and hardcoding them.** This ensures the spreadsheet remains dynamic and updateable.
 
+> **数模场景例外**：普通结果汇总（非指定模板）允许直接将 Python 计算结果写入 CSV/XLSX，无需强制使用 Excel 公式。仅当用户明确要求保留公式或指定 Excel 模板时，才遵循上述规则。
+
 ### ❌ WRONG - Hardcoding Calculated Values
 ```python
 # Bad: Calculating in Python and hardcoding result
