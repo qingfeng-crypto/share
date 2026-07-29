@@ -18,13 +18,19 @@ body::-webkit-scrollbar{width:5px}body::-webkit-scrollbar-thumb{background:rgba(
 .topbar h1{font-size:20px;font-weight:600;display:flex;align-items:center;gap:12px;color:#e1e6ee}
 .light .topbar h1{color:#1a2332}
 .topbar h1 span{font-size:14px;font-weight:400;color:#6b7a8f}
-.topbar-right{display:flex;align-items:center;gap:14px}
+.topbar-right{display:flex;align-items:center;gap:10px}
 .topbar-right a{font-size:14px;color:#4d9fff;text-decoration:none;font-family:'JetBrains Mono',monospace;letter-spacing:-.2px}
 .topbar-right a:hover{text-decoration:underline}
-.btn-theme{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:6px;padding:6px 14px;cursor:pointer;font-size:16px;color:#6b7a8f;line-height:1;transition:all .15s}
+.btn-theme{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:6px;padding:6px 10px;cursor:pointer;font-size:15px;color:#6b7a8f;line-height:1;transition:all .15s}
 .btn-theme:hover{background:rgba(255,255,255,.06);color:#e1e6ee}
 .light .btn-theme{background:rgba(0,0,0,.02);border-color:rgba(0,0,0,.05);color:#6b7a8f}
 .light .btn-theme:hover{background:rgba(0,0,0,.04);color:#1a2332}
+.btn-mobile{display:none;border-radius:6px;border:1px solid rgba(255,255,255,.06);padding:6px 10px;cursor:pointer;font-size:11px;color:#6b7a8f;background:rgba(255,255,255,.03);line-height:1;transition:all .15s;white-space:nowrap;font-family:inherit}
+.btn-mobile:hover{background:rgba(255,255,255,.06);color:#e1e6ee}
+.light .btn-mobile{background:rgba(0,0,0,.02);border-color:rgba(0,0,0,.05);color:#6b7a8f}
+.light .btn-mobile:hover{background:rgba(0,0,0,.04);color:#1a2332}
+.btn-mobile.on{background:rgba(77,159,255,.1);border-color:rgba(77,159,255,.2);color:#4d9fff}
+.light .btn-mobile.on{background:rgba(77,159,255,.06);border-color:rgba(77,159,255,.15);color:#3b7dcc}
 .stats{display:flex;gap:28px;margin-bottom:36px;font-size:14px;color:#5a6678;font-family:'JetBrains Mono',monospace;padding:0 4px}
 .stats .num{color:#8b95a8;font-weight:500}
 .light .stats .num{color:#5a6678}
@@ -98,6 +104,11 @@ body::-webkit-scrollbar{width:5px}body::-webkit-scrollbar-thumb{background:rgba(
 .light .tooltip{background:rgba(255,255,255,.97);border-color:rgba(0,0,0,.03);color:#1a2332}
 .tooltip .tt-h{font-size:11px;opacity:.3;margin-bottom:4px;text-transform:uppercase;letter-spacing:.3px}
 .tooltip .fn{color:#4d9fff}
+/* Mobile mode */
+.mobile .flow-row{flex-direction:column;align-items:stretch;gap:8px}
+.mobile .flow-row .arrow{display:none}
+.mobile .node{width:100%}
+.mobile .phase-h{padding:14px 10px}
 @media(max-width:700px){
   .container{padding:20px 14px 40px}.topbar{margin-bottom:20px}.stats{gap:10px;flex-wrap:wrap;font-size:13px}
   .phase-h{padding:12px 8px}.phase-title{font-size:17px}.phase-num{width:28px;height:28px;font-size:13px}
@@ -129,6 +140,7 @@ body::-webkit-scrollbar{width:5px}body::-webkit-scrollbar-thumb{background:rgba(
 <div class="topbar">
   <h1>数模技能导航 <span>编程手</span></h1>
   <div class="topbar-right">
+    <button class="btn-mobile" id="btnMob" onclick="toggleMobile()" title="切换堆叠/横滑布局">📱</button>
     <a id="entryLink" href="#">SKILL.md</a>
     <button class="btn-theme" onclick="t()">☀</button>
   </div>
@@ -323,6 +335,10 @@ function clickGroup(key){var g=null;for(var i=0;i<groups.length;i++){if(groups[i
 if(activeGroup===key){activeGroup=null;for(var j=0;j<4;j++){phaseState[j]=false}applyPhase();return}
 activeGroup=key;var r={};g.pids.forEach(function(p){r[p]=true});for(var j=0;j<4;j++)phaseState[j]=!r[j];applyPhase()}
 function t(){document.documentElement.classList.toggle('light');try{localStorage.setItem('wf-theme',document.documentElement.classList.contains('light')?'light':'dark')}catch(e){}}
+function toggleMobile(){var b=document.getElementById('btnMob');var on=document.documentElement.classList.toggle('mobile');b.classList.toggle('on',on);try{localStorage.setItem('wf-mobile',on?'1':'')}catch(e){}
+  if(on){b.textContent='📱 堆叠'}else{b.textContent='📱'}}
+function detectMobile(){var w=window.innerWidth;var b=document.getElementById('btnMob');if(w<700){b.style.display='inline-block';var s=localStorage.getItem('wf-mobile');if(s==='1'){document.documentElement.classList.add('mobile');b.classList.add('on');b.textContent='📱 堆叠'}}else{b.style.display='none';document.documentElement.classList.remove('mobile');b.classList.remove('on');b.textContent='📱'}}
+detectMobile();window.addEventListener('resize',detectMobile);
   try{var s=localStorage.getItem('wf-theme');if(s==='light'||!s)document.documentElement.classList.add('light')}catch(e){}
 </script>
 </body>
