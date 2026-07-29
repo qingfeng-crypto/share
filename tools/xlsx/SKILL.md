@@ -64,6 +64,8 @@ license: Proprietary. LICENSE.txt has complete terms
 
 A user may ask you to create, edit, or analyze the contents of an .xlsx file. You have different tools and workflows available for different tasks.
 
+> **注意**：以下所有 `scripts/` 路径命令假设当前工作目录为本技能目录 `tools/xlsx/`。若在不同目录执行，需调整路径或使用绝对路径。
+
 ## 数学建模项目约定
 
 普通结果汇总优先输出 CSV；只有指定 Excel 模板、需要保留公式、多 sheet 或题目要求 `.xlsx` 时，才按本 skill 的 Excel 公式与重算流程处理。

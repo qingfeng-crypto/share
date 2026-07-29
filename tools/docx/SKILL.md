@@ -10,6 +10,8 @@ license: Proprietary. LICENSE.txt has complete terms
 
 A .docx file is a ZIP archive containing XML files.
 
+> **注意**：以下所有 `scripts/` 路径命令假设当前工作目录为本技能目录 `tools/docx/`。若在不同目录执行，需调整路径或使用绝对路径。
+
 ## Quick Reference
 
 | Task | Approach |
@@ -472,6 +474,32 @@ fp._element.append(parse_xml(
 - **三线表：先清除 `tblBorders`**，再逐格添加 `tcBorders`
 - **公式：优先用 `paper_format.equation()`** — 只有已有占位符文档才用 `equations.py replace`
 - **始终 `doc.save()`** — python-docx 内存操作，不 save 不写入
+
+#### Internal Hyperlinks / Bookmarks（内部超链接与书签）
+
+**⚠️ Word 内部跳转（目录→章节、导航页→章节）必须遵守 OOXML 三要素：**
+
+1. **`\l` 开关不能省** — 域代码必须是 `HYPERLINK \l "书签名"`，缺了 `\l` 会被当作文件路径解析
+2. **书签 `w:id` 必须唯一且配对** — `bookmarkStart` / `bookmarkEnd` 的 `w:id` 不能重复，用全局计数器生成
+3. **书签位置必须包裹内容** — `bookmarkStart` 插在标题文本前（pPr 之后），`bookmarkEnd` 追加到段落末尾，两者在同一个 `<w:p>` 内
+
+```python
+bm_counter = 0
+def add_bookmark(paragraph, name):
+    global bm_counter
+    bm_counter += 1
+    p = paragraph._element
+    pPr = p.find(qn('w:pPr'))
+    start = parse_xml(f'<w:bookmarkStart w:name="{name}" w:id="{bm_counter}" ' + nsdecls('w') + '/>')
+    end   = parse_xml(f'<w:bookmarkEnd w:id="{bm_counter}" ' + nsdecls('w') + '/>')
+    if pPr is not None:
+        pPr.addnext(start)
+    else:
+        p.insert(0, start)
+    p.append(end)
+```
+
+违反任意一条 = 所有链接跳到首页或显示为域代码文本。
 
 ---
 

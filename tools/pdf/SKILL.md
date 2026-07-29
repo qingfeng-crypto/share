@@ -8,7 +8,7 @@ license: Proprietary. LICENSE.txt has complete terms
 
 ## Overview
 
-This guide covers essential PDF processing operations using Python libraries and command-line tools. For advanced features, JavaScript libraries, and detailed examples, see REFERENCE.md. If you need to fill out a PDF form, read FORMS.md and follow its instructions.
+This guide covers essential PDF processing operations using Python libraries and command-line tools, including advanced features, JavaScript libraries (pdf-lib), form filling, and detailed examples for each approach.
 
 ## Quick Start
 
@@ -357,11 +357,8 @@ with open("encrypted.pdf", "wb") as output:
 | Create PDFs | reportlab | Canvas or Platypus |
 | Command line merge | qpdf | `qpdf --empty --pages ...` |
 | OCR scanned PDFs | fitz + tesseract CLI | Render page→PNG, then `tesseract -l chi_sim` (see above) |
-| Fill PDF forms | pdf-lib or pypdf (see FORMS.md) | See FORMS.md |
+| Fill PDF forms | pdf-lib or pypdf | Use pdf-lib (JS) or pypdf (Python) to programmatically set form field values |
 
 ## Next Steps
 
-- For advanced pypdfium2 usage, see REFERENCE.md
-- For JavaScript libraries (pdf-lib), see REFERENCE.md
-- If you need to fill out a PDF form, follow the instructions in FORMS.md
-- For troubleshooting guides, see REFERENCE.md
+- For more advanced usage (pypdfium2, pdf-lib, troubleshooting), refer to the corresponding library documentation or the tool references in the skill's directory
