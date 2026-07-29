@@ -99,8 +99,27 @@ body::-webkit-scrollbar{width:5px}body::-webkit-scrollbar-thumb{background:rgba(
 .tooltip .tt-h{font-size:11px;opacity:.3;margin-bottom:4px;text-transform:uppercase;letter-spacing:.3px}
 .tooltip .fn{color:#4d9fff}
 @media(max-width:700px){
-  .container{padding:28px 16px 40px}.topbar{margin-bottom:28px}.stats{gap:16px}
-  .node{width:140px;padding:14px 8px 12px}.node .step{font-size:14px}.arrow{width:20px}
+  .container{padding:20px 14px 40px}.topbar{margin-bottom:20px}.stats{gap:10px;flex-wrap:wrap;font-size:13px}
+  .phase-h{padding:12px 8px}.phase-title{font-size:17px}.phase-num{width:28px;height:28px;font-size:13px}
+  .phase-note{font-size:14px;padding:6px 0 6px 12px}
+  .node{width:130px;padding:12px 6px 10px}.node .step{font-size:13px}.arrow{width:18px}
+  .file-strip{flex-direction:column;gap:8px;overflow-x:visible}.file-g{min-width:0;width:100%;padding:12px 14px}
+  .file-g ul{display:flex;flex-wrap:wrap;gap:2px 12px}.file-g li{font-size:13px;padding:3px 0}
+  .popup{left:10px!important;right:10px!important;top:auto!important;bottom:10px!important;max-width:none;width:auto;border-radius:12px;max-height:60vh;overflow-y:auto}
+  .tooltip{display:none!important}
+  .popup .close{font-size:22px;top:6px;right:12px}
+}
+@media(max-width:480px){
+  .container{padding:16px 12px 32px}
+  .topbar h1{font-size:17px}.topbar h1 span{font-size:12px}.topbar-right a{font-size:13px}
+  .stats{font-size:12px;gap:6px}
+  .phase-title{font-size:16px}.phase-tag{font-size:12px;margin-left:2px}.phase-count{font-size:12px}
+  .phase-num{width:24px;height:24px;font-size:12px}
+  .node{width:120px;padding:10px 4px 8px}.node .step{font-size:12px}.node .sub{font-size:10px}.node .badge{font-size:10px}
+  .phase-note{font-size:13px}
+  .arrow{width:14px}.arrow svg{width:12px;height:12px}
+  .index h2{font-size:14px}.file-g h3{font-size:13px}.file-g li{font-size:12px}
+  .global-note{font-size:12px}
 }
 </style>
 </head>
