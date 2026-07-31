@@ -140,7 +140,7 @@ body::-webkit-scrollbar{width:5px}body::-webkit-scrollbar-thumb{background:rgba(
 <div class="topbar">
   <h1>数模技能导航 <span>编程手</span></h1>
   <div class="topbar-right">
-    <button class="btn-mobile" id="btnMob" onclick="toggleMobile()" title="切换堆叠/横滑布局">📱 堆叠</button>
+    <button class="btn-mobile" id="btnMob" onclick="toggleMobile()" title="切换堆叠/横滑布局">📱 手机浏览模式</button>
     <a id="entryLink" href="#">SKILL.md</a>
     <button class="btn-theme" onclick="t()">☀</button>
   </div>
@@ -332,8 +332,8 @@ if(activeGroup===key){activeGroup=null;for(var j=0;j<4;j++){phaseState[j]=false}
 activeGroup=key;var r={};g.pids.forEach(function(p){r[p]=true});for(var j=0;j<4;j++)phaseState[j]=!r[j];applyPhase()}
 function t(){document.documentElement.classList.toggle('light');try{localStorage.setItem('wf-theme',document.documentElement.classList.contains('light')?'light':'dark')}catch(e){}}
 function toggleMobile(){var b=document.getElementById('btnMob');var on=document.documentElement.classList.toggle('mobile');b.classList.toggle('on',on);try{localStorage.setItem('wf-mobile',on?'1':'')}catch(e){}
-  if(on){b.textContent='📱 恢复横滑'}else{b.textContent='📱 切换堆叠'}}
-function detectMobile(){var b=document.getElementById('btnMob');var s=localStorage.getItem('wf-mobile');if(s==='1'){document.documentElement.classList.add('mobile');b.classList.add('on');b.textContent='📱 堆叠'}}
+  if(on){b.textContent='📱 手机浏览模式'}else{b.textContent='📱 手机浏览模式'}}
+function detectMobile(){var b=document.getElementById('btnMob');var s=localStorage.getItem('wf-mobile');if(s==='1'){document.documentElement.classList.add('mobile');b.classList.add('on');b.textContent='📱 手机浏览模式'}}
 detectMobile();
   try{var s=localStorage.getItem('wf-theme');if(s==='light'||!s)document.documentElement.classList.add('light')}catch(e){}
 </script>
