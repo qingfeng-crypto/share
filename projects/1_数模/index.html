@@ -94,25 +94,11 @@ body::-webkit-scrollbar{width:5px}body::-webkit-scrollbar-thumb{background:rgba(
 .light .arch-section,.light .dir-section{border-color:rgba(0,0,0,.03)}
 .arch-section h2,.dir-section h2{font-size:16px;font-weight:600;margin-bottom:18px;color:#8b95a8;display:flex;align-items:center;gap:8px}
 .light .arch-section h2,.light .dir-section h2{color:#6b7a8f}
-.arch-top{display:flex;justify-content:center;margin-bottom:16px}
-.arch-box{min-width:200px;padding:14px 12px;border-radius:8px;text-align:center;font-size:14px;font-weight:600;line-height:1.4}
-.arch-box small{display:block;font-size:12px;font-weight:400;opacity:.5;margin-top:4px;line-height:1.3}
-.ab-phase{background:rgba(77,159,255,.06);border:1px solid rgba(77,159,255,.12);color:#4d9fff}
-.arch-lanes{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;justify-content:center}
-.arch-lane{flex:1;min-width:180px;padding:12px 14px;border-radius:8px}
-.arch-lane-h{font-size:14px;font-weight:600;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,.06)}
-.light .arch-lane-h{border-color:rgba(0,0,0,.06)}
-.arch-lane-items{display:flex;flex-direction:column;gap:5px}
-.arch-lane-items span{font-size:12px;opacity:.7;line-height:1.4}
-.al-review{background:rgba(176,130,255,.04);border:1px solid rgba(176,130,255,.1);color:#b082ff}
-.al-code{background:rgba(63,185,80,.04);border:1px solid rgba(63,185,80,.1);color:#3fb950}
-.al-deliver{background:rgba(210,153,34,.04);border:1px solid rgba(210,153,34,.1);color:#d29922}
-.arch-contract{text-align:center;font-size:12px;color:#5a6678;margin-bottom:16px;padding:6px 0;border-top:1px solid rgba(255,255,255,.02);border-bottom:1px solid rgba(255,255,255,.02)}
-.light .arch-contract{border-color:rgba(0,0,0,.02)}
-.arch-resources{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.arch-res{font-size:12px;padding:5px 12px;border-radius:4px;font-family:'JetBrains Mono',monospace}
-.res-asset{background:rgba(176,130,255,.05);border:1px solid rgba(176,130,255,.1);color:#b082ff}
-.res-tool{background:rgba(107,122,143,.05);border:1px solid rgba(107,122,143,.1);color:#6b7a8f}
+.arch-entry a{text-decoration:none}
+.arch-entry-card{padding:18px 20px;border-radius:10px;background:rgba(77,159,255,.04);border:1px solid rgba(77,159,255,.12);transition:all .15s;text-align:center}
+.arch-entry-card:hover{background:rgba(77,159,255,.08);border-color:rgba(77,159,255,.25)}
+.arch-entry-title{font-size:15px;font-weight:600;color:#4d9fff}
+.arch-entry-desc{font-size:12px;color:#5a6678;margin-top:6px}
 .dir-tree{font-family:'JetBrains Mono','Fira Code',monospace;font-size:13px;line-height:1.7;color:#5a6678;background:rgba(255,255,255,.01);border:1px solid rgba(255,255,255,.03);border-radius:8px;padding:20px 24px;overflow-x:auto;white-space:pre}
 .light .dir-tree{background:rgba(0,0,0,.01);border-color:rgba(0,0,0,.03)}
 .footer{text-align:center;font-size:12px;color:#5a6678;margin-top:18px;opacity:.15;font-family:'JetBrains Mono',monospace}
@@ -171,6 +157,7 @@ body::-webkit-scrollbar{width:5px}body::-webkit-scrollbar-thumb{background:rgba(
   <div class="topbar-right">
     <button class="btn-mobile" id="btnMob" onclick="toggleMobile()" title="切换堆叠/横滑布局">📱 手机浏览模式</button>
     <a id="entryLink" href="#">SKILL.md</a>
+    <a id="archLink" href="#">架构图</a>
     <button class="btn-theme" onclick="t()">☀</button>
   </div>
 </div>
@@ -238,35 +225,13 @@ body::-webkit-scrollbar{width:5px}body::-webkit-scrollbar-thumb{background:rgba(
 
 <div class="arch-section">
 <h2>技能架构</h2>
-<div class="arch-diagram">
-<div class="arch-top">
-  <div class="arch-box ab-phase">数模技能（总入口 SKILL.md）<br><small>三轨并行协作 · 72小时时间线</small></div>
-</div>
-<div class="arch-lanes">
-  <div class="arch-lane al-review">
-    <div class="arch-lane-h">建模审查（翻译桥）</div>
-    <div class="arch-lane-items">
-      <span>子问题拆解审查</span><span>三色准入</span><span>路由客观输入</span><span>交接契约</span>
+<div class="arch-entry">
+  <a href="https://qingfeng-crypto.github.io/share/projects/1_数模/mathmodel-architecture.html" target="_blank">
+    <div class="arch-entry-card">
+      <div class="arch-entry-title">📊 打开交互式架构图</div>
+      <div class="arch-entry-desc">三轨并行 DAG · 交接契约衔接 · 支持明暗主题切换与导出</div>
     </div>
-  </div>
-  <div class="arch-lane al-code">
-    <div class="arch-lane-h">编程手核心</div>
-    <div class="arch-lane-items">
-      <span>方法-语言路由</span><span>编码+验证</span><span>图表生成</span><span>8项交付</span>
-    </div>
-  </div>
-  <div class="arch-lane al-deliver">
-    <div class="arch-lane-h">交付论文手</div>
-    <div class="arch-lane-items">
-      <span>早期介入搭框架</span><span>逐子问题交付</span><span>交付包</span>
-    </div>
-  </div>
-</div>
-<div class="arch-contract">交接契约（三轨衔接纽带 · 虚拟签收机制）</div>
-<div class="arch-resources">
-  <span class="arch-res res-asset">算法资产库（7类60+算法）</span>
-  <span class="arch-res res-tool">工具技能（文献搜索/Word/PDF/Excel）</span>
-</div>
+  </a>
 </div>
 </div>
 
@@ -353,7 +318,7 @@ function go(id,e){
 function closePopup(){document.getElementById('popup').style.display='none'}
 document.addEventListener('click',function(e){var p=document.getElementById('popup');if(p.style.display==='block'&&!p.contains(e.target))closePopup()});
 document.addEventListener('keydown',function(e){if(e.key==='Escape'){closePopup();document.getElementById('tooltip').style.display='none'}if((e.key==='Enter'||e.key===' ')&&e.target.classList.contains('phase-h')){e.preventDefault();e.target.click()}});
-document.getElementById('entryLink').href=u('SKILL.md');window.addEventListener('resize',closePopup);
+document.getElementById('entryLink').href=u('SKILL.md');document.getElementById('archLink').href='https://qingfeng-crypto.github.io/share/projects/1_数模/mathmodel-architecture.html';window.addEventListener('resize',closePopup);
 
 document.getElementById('p0').innerHTML=[
   card('读题+初判','题型/数据/胜任度',[['SKILL.md',u('SKILL.md')],['assets/README.md',u('assets/README.md')]]),
