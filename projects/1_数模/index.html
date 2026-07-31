@@ -138,6 +138,10 @@ body::-webkit-scrollbar{width:6px}body::-webkit-scrollbar-thumb{background:rgba(
 .light .tooltip{background:rgba(255,255,255,.97);border-color:rgba(0,0,0,.03);color:#1a2332}
 .tooltip .tt-h{font-size:11px;opacity:.3;margin-bottom:4px;text-transform:uppercase;letter-spacing:.3px}
 .tooltip .fn{color:#4d9fff}
+#glow{position:fixed;width:340px;height:340px;border-radius:50%;pointer-events:none;z-index:0;background:radial-gradient(circle,rgba(77,159,255,.07),transparent 65%);transform:translate(-50%,-50%);opacity:0;transition:opacity .3s ease;will-change:left,top}
+.light #glow{background:radial-gradient(circle,rgba(77,159,255,.1),transparent 65%)}
+body:hover #glow{opacity:1}
+@media(pointer:coarse){#glow{display:none}}
 /* Mobile mode */
 .mobile .flow-row{flex-direction:column;align-items:stretch;gap:8px;max-width:400px}
 .mobile .flow-row .arrow{display:none}
@@ -301,6 +305,8 @@ math-modeling/
 
 <div id="tooltip" class="tooltip"></div>
 
+<div id="glow" aria-hidden="true"></div>
+
 <script>
 var B='https://github.com/qingfeng-crypto/share/blob/main/projects/1_数模/';
 function u(p){return B+encodeURI(p)}
@@ -420,6 +426,11 @@ function toggleMobile(){var b=document.getElementById('btnMob');var on=document.
 function detectMobile(){var b=document.getElementById('btnMob');var s=localStorage.getItem('wf-mobile');if(s==='1'){document.documentElement.classList.add('mobile');b.classList.add('on');b.textContent='📱 手机浏览模式'}}
 detectMobile();
   try{var s=localStorage.getItem('wf-theme');if(s==='light'||!s)document.documentElement.classList.add('light')}catch(e){}
+var glow=document.getElementById('glow'),gx=0,gy=0,tx=0,ty=0,raf=null;
+if(glow&&matchMedia('(pointer:fine)').matches){
+  document.addEventListener('mousemove',function(e){tx=e.clientX;ty=e.clientY;if(!raf)raf=requestAnimationFrame(step)});
+  function step(){gx+=(tx-gx)*.12;gy+=(ty-gy)*.12;glow.style.left=gx+'px';glow.style.top=gy+'px';raf=null;if(Math.abs(tx-gx)>1||Math.abs(ty-gy)>1)raf=requestAnimationFrame(step)}
+}
 </script>
 </body>
 </html>
