@@ -328,8 +328,8 @@ var phaseNodes=[
   {nodes:['交付入口','逐子问题交付']}
 ];
 
-var phaseState={};
-try{var ps=localStorage.getItem('wf-ps');if(ps)phaseState=JSON.parse(ps)}catch(e){}
+var phaseState={0:true,1:true,2:true,3:true};
+try{var ps=localStorage.getItem('wf-ps');if(ps){var saved=JSON.parse(ps);for(var i=0;i<4;i++){if(typeof saved[i]!=='undefined')phaseState[i]=saved[i]}}}catch(e){}
 function togglePhase(i){phaseState[i]=!phaseState[i];applyPhase();try{localStorage.setItem('wf-ps',JSON.stringify(phaseState))}catch(e){}}
 function applyPhase(){for(var i=0;i<4;i++){var b=document.getElementById('pb'+i),a=document.getElementById('pa'+i),h=document.querySelector('.phase[data-pid="'+i+'"] .phase-h');if(b&&a){if(phaseState[i]){b.classList.add('collapsed');a.classList.remove('open');if(h)h.setAttribute('aria-expanded','false')}else{b.classList.remove('collapsed');a.classList.add('open');if(h)h.setAttribute('aria-expanded','true')}}}}
 
