@@ -94,22 +94,21 @@ body::-webkit-scrollbar{width:5px}body::-webkit-scrollbar-thumb{background:rgba(
 .light .arch-section,.light .dir-section{border-color:rgba(0,0,0,.03)}
 .arch-section h2,.dir-section h2{font-size:16px;font-weight:600;margin-bottom:18px;color:#8b95a8;display:flex;align-items:center;gap:8px}
 .light .arch-section h2,.light .dir-section h2{color:#6b7a8f}
-.arch-row{display:flex;align-items:stretch;gap:8px;margin-bottom:16px;flex-wrap:wrap;justify-content:center}
-.arch-box{flex:1;min-width:130px;padding:14px 12px;border-radius:8px;text-align:center;font-size:14px;font-weight:600;line-height:1.4}
+.arch-top{display:flex;justify-content:center;margin-bottom:16px}
+.arch-box{min-width:200px;padding:14px 12px;border-radius:8px;text-align:center;font-size:14px;font-weight:600;line-height:1.4}
 .arch-box small{display:block;font-size:12px;font-weight:400;opacity:.5;margin-top:4px;line-height:1.3}
 .ab-phase{background:rgba(77,159,255,.06);border:1px solid rgba(77,159,255,.12);color:#4d9fff}
-.ab-review{background:rgba(176,130,255,.06);border:1px solid rgba(176,130,255,.12);color:#b082ff}
-.ab-code{background:rgba(63,185,80,.06);border:1px solid rgba(63,185,80,.12);color:#3fb950}
-.ab-deliver{background:rgba(210,153,34,.06);border:1px solid rgba(210,153,34,.12);color:#d29922}
-.arch-arrow{display:flex;align-items:center;color:#5a6678;font-size:18px;opacity:.3}
+.arch-lanes{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;justify-content:center}
+.arch-lane{flex:1;min-width:180px;padding:12px 14px;border-radius:8px}
+.arch-lane-h{font-size:14px;font-weight:600;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,.06)}
+.light .arch-lane-h{border-color:rgba(0,0,0,.06)}
+.arch-lane-items{display:flex;flex-direction:column;gap:5px}
+.arch-lane-items span{font-size:12px;opacity:.7;line-height:1.4}
+.al-review{background:rgba(176,130,255,.04);border:1px solid rgba(176,130,255,.1);color:#b082ff}
+.al-code{background:rgba(63,185,80,.04);border:1px solid rgba(63,185,80,.1);color:#3fb950}
+.al-deliver{background:rgba(210,153,34,.04);border:1px solid rgba(210,153,34,.1);color:#d29922}
 .arch-contract{text-align:center;font-size:12px;color:#5a6678;margin-bottom:16px;padding:6px 0;border-top:1px solid rgba(255,255,255,.02);border-bottom:1px solid rgba(255,255,255,.02)}
 .light .arch-contract{border-color:rgba(0,0,0,.02)}
-.arch-sub{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;justify-content:center}
-.arch-box-sub{flex:1;min-width:160px;padding:12px 14px;border-radius:8px;text-align:center;font-size:14px;font-weight:500;line-height:1.4}
-.arch-box-sub span{display:block;font-size:12px;opacity:.5;margin-top:4px;line-height:1.3}
-.as-1{background:rgba(176,130,255,.04);border:1px solid rgba(176,130,255,.08);color:#b082ff}
-.as-2{background:rgba(63,185,80,.04);border:1px solid rgba(63,185,80,.08);color:#3fb950}
-.as-3{background:rgba(210,153,34,.04);border:1px solid rgba(210,153,34,.08);color:#d29922}
 .arch-resources{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 .arch-res{font-size:12px;padding:5px 12px;border-radius:4px;font-family:'JetBrains Mono',monospace}
 .res-asset{background:rgba(176,130,255,.05);border:1px solid rgba(176,130,255,.1);color:#b082ff}
@@ -147,8 +146,7 @@ body::-webkit-scrollbar{width:5px}body::-webkit-scrollbar-thumb{background:rgba(
   .popup{left:10px!important;right:10px!important;top:auto!important;bottom:10px!important;max-width:none;width:auto;border-radius:12px;max-height:60vh;overflow-y:auto}
   .tooltip{display:none!important}
   .popup .close{font-size:22px;top:6px;right:12px}
-  .arch-row{flex-direction:column;gap:6px}.arch-arrow{display:none}
-  .arch-sub{flex-direction:column;gap:6px}
+  .arch-lanes{flex-direction:column;gap:6px}
   .dir-tree{font-size:12px;padding:14px 16px}
 }
 @media(max-width:480px){
@@ -177,7 +175,7 @@ body::-webkit-scrollbar{width:5px}body::-webkit-scrollbar-thumb{background:rgba(
   </div>
 </div>
 <div class="stats" id="statsLine"></div>
-<div class="hint">提示：双击可打开文件，默认折叠</div>
+<div class="hint">提示：单击可打开文件，默认折叠</div>
 
 <div class="phase p1" data-pid="0">
   <div class="phase-h" onclick="togglePhase(0)" tabindex="0" role="button" aria-expanded="true">
@@ -241,24 +239,33 @@ body::-webkit-scrollbar{width:5px}body::-webkit-scrollbar-thumb{background:rgba(
 <div class="arch-section">
 <h2>技能架构</h2>
 <div class="arch-diagram">
-<div class="arch-row">
-  <div class="arch-box ab-phase">① 初始题目分析<br><small>题型归判·数据规模·胜任度速评</small></div>
-  <div class="arch-arrow">→</div>
-  <div class="arch-box ab-review">② 建模审查（翻译桥）<br><small>审查建模手产出·路由客观输入</small></div>
-  <div class="arch-arrow">→</div>
-  <div class="arch-box ab-code">③ 代码实现<br><small>路由确认·编码·验证·图表</small></div>
-  <div class="arch-arrow">→</div>
-  <div class="arch-box ab-deliver">④ 论文交付材料<br><small>整理交付包·不写正文</small></div>
+<div class="arch-top">
+  <div class="arch-box ab-phase">数模技能（总入口 SKILL.md）<br><small>三轨并行协作 · 72小时时间线</small></div>
 </div>
-<div class="arch-contract">交接契约（三轨衔接纽带）</div>
-<div class="arch-sub">
-  <div class="arch-box-sub as-1">建模审查（翻译桥）<br><span>子问题审查·三色准入·路由客观输入</span></div>
-  <div class="arch-box-sub as-2">编程手核心<br><span>方法路由·编码·验证·图表·8项交付</span></div>
-  <div class="arch-box-sub as-3">交付论文手<br><span>早期介入·搭框架·逐子问题交付</span></div>
+<div class="arch-lanes">
+  <div class="arch-lane al-review">
+    <div class="arch-lane-h">建模审查（翻译桥）</div>
+    <div class="arch-lane-items">
+      <span>子问题拆解审查</span><span>三色准入</span><span>路由客观输入</span><span>交接契约</span>
+    </div>
+  </div>
+  <div class="arch-lane al-code">
+    <div class="arch-lane-h">编程手核心</div>
+    <div class="arch-lane-items">
+      <span>方法-语言路由</span><span>编码+验证</span><span>图表生成</span><span>8项交付</span>
+    </div>
+  </div>
+  <div class="arch-lane al-deliver">
+    <div class="arch-lane-h">交付论文手</div>
+    <div class="arch-lane-items">
+      <span>早期介入搭框架</span><span>逐子问题交付</span><span>交付包</span>
+    </div>
+  </div>
 </div>
+<div class="arch-contract">交接契约（三轨衔接纽带 · 虚拟签收机制）</div>
 <div class="arch-resources">
-  <span class="arch-res res-asset">算法资产（7类60+算法）</span>
-  <span class="arch-res res-tool">工具技能（文献/Word/PDF/Excel）</span>
+  <span class="arch-res res-asset">算法资产库（7类60+算法）</span>
+  <span class="arch-res res-tool">工具技能（文献搜索/Word/PDF/Excel）</span>
 </div>
 </div>
 </div>
